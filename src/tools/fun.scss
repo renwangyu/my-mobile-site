@@ -1,0 +1,4 @@
+$designWidth : 375;
+@function r($px){
+  @return $px / $designWidth * 10 + rem;
+}

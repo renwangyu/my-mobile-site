@@ -1,12 +1,21 @@
+import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import App from './App';
+import Home from './pages/home';
+import Photo from './pages/photo';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App>
+      <Router>
+        <Route path="/home" component={Home} />
+        <Route path="/photo" component={Photo} />
+        <Route exact path="/" component={Home} />
+      </Router>
+    </App>
   </React.StrictMode>,
   document.getElementById('root')
 );
