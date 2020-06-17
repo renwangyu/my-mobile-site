@@ -2,18 +2,37 @@ import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Loadable from 'react-loadable';
 import App from './App';
-import Home from './pages/home';
-import Photo from './pages/photo';
 import * as serviceWorker from './serviceWorker';
+
+const Loading = ({ isLoading, error }) => {
+  if (isLoading) {
+    return null;
+  }
+  if (error) {
+    return <div>Sorry, there was a problem loading the page.</div>;
+  }
+  return null;
+};
+
+const HomeComp = Loadable({
+  loader: () => import('./pages/home'),
+  loading: Loading
+});
+
+const PhotoComp = Loadable({
+  loader: () => import('./pages/photo'),
+  loading: Loading
+});
 
 ReactDOM.render(
   <React.StrictMode>
     <App>
       <Router>
-        <Route path="/home" component={Home} />
-        <Route path="/photo" component={Photo} />
-        <Route exact path="/" component={Home} />
+        <Route path="/home" component={HomeComp} />
+        <Route path="/photo" component={PhotoComp} />
+        <Route exact path="/" component={HomeComp} />
       </Router>
     </App>
   </React.StrictMode>,
