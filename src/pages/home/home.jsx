@@ -13,7 +13,8 @@ function Home() {
       <div className="mobile-page-home_head">
         <img src={bbPic} alt="avatar"/>
         <div className="mobile-page-home_head--tip">
-          <div>请在pc端打开链接</div>
+          <div>请在pc端访问</div>
+          <div>https://renwangyu.com</div>
           <div>让我们出发吧~</div>
         </div>
       </div>

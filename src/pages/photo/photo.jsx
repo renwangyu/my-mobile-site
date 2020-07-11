@@ -1,17 +1,19 @@
-import React, { useEffect } from 'react';
-import classnames from 'classnames';
-import { init, animate } from '../../three/point-cloud';
+import React, { useState, useEffect } from 'react';
+import BgPointCloud3d from '../../components/bgPointCloud3d';
+
 
 function Photo(props) {
-
+  const [show, setShow] = useState(false);
   useEffect(() => {
-    init();
-    animate();
-  }, []);
+    setTimeout(() => {
+      setShow(true);
+    }, 7000)
+  }, [])
 
   return (
     <article className="mobile-page-photo">
-      <div id="container"></div>
+      { show && <p className="hello-world">hello world</p> }
+      <BgPointCloud3d />
     </article>
   );
 }

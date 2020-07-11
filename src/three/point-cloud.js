@@ -130,30 +130,48 @@ you're gonna see some serious shit.	*/
 code is wrecking the performance of a user's machine.
 Let's see some damn stats!	*/
 
-    stats = new Stats();
-    stats.domElement.style.position = 'absolute';
-    stats.domElement.style.top = '0px';
-    stats.domElement.style.right = '0px';
-    container.appendChild(stats.domElement);
+    // stats = new Stats();
+    // stats.domElement.style.position = 'absolute';
+    // stats.domElement.style.top = '0px';
+    // stats.domElement.style.right = '0px';
+    // container.appendChild(stats.domElement);
 
     /* Event Listeners */
 
     window.addEventListener('resize', onWindowResize, false);
     document.addEventListener('mousemove', onDocumentMouseMove, false);
     document.addEventListener('touchstart', onDocumentTouchStart, false);
+    document.addEventListener('touchend', onDocumentTouchEnd, false);
     document.addEventListener('touchmove', onDocumentTouchMove, false);
 
 }
 
 export function animate() {
     requestAnimationFrame(animate);
+    !isStop && auto();
     render();
-    stats.update();
+    // stats.update();
+}
+
+let time = 0;
+let isStop = false
+let isFirst = true;
+
+function auto() {
+  if (time > 1000) {
+    isStop = true;
+    // 在延后两秒，没什么理由
+    setTimeout(() => {
+        isFirst = false;
+    }, 2000);
+  }
+  time += 2.5;
+  mouseX = windowHalfX + time;
+  mouseY = windowHalfY + time;
 }
 
 function render() {
     let time = Date.now() * 0.00005;
-
     camera.position.x += (mouseX - camera.position.x) * 0.05;
     camera.position.y += (-mouseY - camera.position.y) * 0.05;
 
@@ -181,6 +199,7 @@ function render() {
 }
 
 function onDocumentMouseMove(e) {
+    if (isFirst) return;
     mouseX = e.clientX - windowHalfX;
     mouseY = e.clientY - windowHalfY;
 }
@@ -188,7 +207,9 @@ function onDocumentMouseMove(e) {
 /*	Mobile users?  I got your back homey	*/
 
 function onDocumentTouchStart(e) {
-
+    if (isFirst) return;
+    isStop = true;
+    time = 0;
     if (e.touches.length === 1) {
 
         e.preventDefault();
@@ -197,13 +218,21 @@ function onDocumentTouchStart(e) {
     }
 }
 
-function onDocumentTouchMove(e) {
+function onDocumentTouchEnd(e) {
+    if (isFirst) return;
+    isStop = false;
+}
 
+function onDocumentTouchMove(e) {
+    if (isFirst) return;
+    isStop = true;
     if (e.touches.length === 1) {
 
         e.preventDefault();
-        mouseX = e.touches[0].pageX - windowHalfX;
-        mouseY = e.touches[0].pageY - windowHalfY;
+        // mouseX = e.touches[0].pageX - windowHalfX;
+        // mouseY = e.touches[0].pageY - windowHalfY;
+        mouseX = windowHalfX - e.touches[0].pageX;
+        mouseY = windowHalfY - e.touches[0].pageY;
     }
 }
 
