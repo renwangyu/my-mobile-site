@@ -165,7 +165,7 @@ function auto() {
         isFirst = false;
     }, 2000);
   }
-  time += 2.5;
+  time += 1;
   mouseX = windowHalfX + time;
   mouseY = windowHalfY + time;
 }

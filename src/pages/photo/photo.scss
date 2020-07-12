@@ -1,7 +1,19 @@
+@import '../../tools/fun.scss';
+
 .mobile-page-photo {
-  .hello-world {
-    position: absolute;
-    z-index: 9;
-    color: white;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+
+  &-content {
+    width: 100%;
+
+    .baby {
+      transform-origin: left top;
+      transform: scale(0.15) translateX(-50%);
+      margin-left: 50%;
+      margin-top: 60%;
+    }
   }
 }
