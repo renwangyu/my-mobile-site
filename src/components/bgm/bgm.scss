@@ -1,5 +1,33 @@
 @import '../../tools/fun.scss';
 
 .comp-bgm {
-  color: red;
+  color: gray;
+  display: inline-block;
+  width: r(20);
+  height: r(20);
+  line-height: r(20);
+  background-color: white;
+  border-radius: 50%;
+  
+  &--play {
+    animation: iconRotate 2s linear infinite both;
+  }
+
+  &--pause {
+
+  }
+
+  &__music-btn {
+    font-size: r(15);
+  }
+  
+}
+
+@keyframes iconRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
 }

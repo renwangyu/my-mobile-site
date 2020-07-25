@@ -6,6 +6,12 @@
   height: 100vh;
   overflow: hidden;
 
+  &__bgm {
+    position: fixed;
+    top: r(5);
+    right: r(5);
+  }
+
   &-content {
     width: 100%;
 

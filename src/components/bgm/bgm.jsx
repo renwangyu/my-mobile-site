@@ -1,24 +1,45 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import classnames from 'classnames';
-import song from '../../assets/music/slamdunk.mp3';
+import Icon from '../icon';
 
 function BGM(props) {
-  const { className } = props;
-  const clazz = classnames({
-    'comp-bgm': true,
-    [className]: true,
-  });
-  
+  const [isPlay, setPlay] = useState(false);
   const bgmRef = useRef(null);
 
+  const {
+    className = '',
+    song = '',
+  } = props;
+  const clazz = classnames({
+    'comp-bgm': true,
+    'comp-bgm--play': isPlay,
+    'comp-bgm--pause': !isPlay,
+    [className]: true,
+  });
+
   useEffect(() => {
-    bgmRef.current.play();
-  }, [])
+    if (isPlay) {
+      bgmRef.current.play();
+    } else {
+      bgmRef.current.pause();
+    }
+  }, [isPlay])
 
   return (
-    <section className={clazz}>
-      <audio id="bgm" ref={bgmRef} src={song}></audio>
-      music
+    <section
+      className={clazz}
+      onClick={(e) => {
+        e.stopPropagation();
+        setPlay(v => !v);
+      }}
+    >
+      <Icon name="music" className="comp-bgm__music-btn" />
+      <audio
+        id="bgm"
+        ref={bgmRef}
+        src={song}
+        loop
+        />
     </section>
   )
 }
