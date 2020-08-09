@@ -1,5 +1,13 @@
 @import '../../tools/fun.scss';
 
+$items: (
+  (url: '../../assets/bb.png', width: 100, height: 100),
+  (url: '../../assets/nn.png', width: 100, height: 100),
+  (url: '../../assets/clock.png', width: 100, height: 100),
+  (url: '../../assets/tx.jpeg', width: 100, height: 100),
+);
+$length: length($items);
+
 .mobile-page-photo {
   position: relative;
   width: 100vw;
@@ -10,16 +18,66 @@
     position: fixed;
     top: r(5);
     right: r(5);
+    z-index: 9999;
   }
 
   &-content {
     width: 100%;
+    border: 1px solid gray;
+
+    perspective: 100px;
+    // perspective-origin: 50% 50%;
+    transform-style: preserve-3d;
 
     .baby {
       transform-origin: left top;
       transform: scale(0.15) translateX(-50%);
       margin-left: 50%;
       margin-top: 60%;
+    }
+
+    @for $i from 1 through $length {
+      $obj: nth($items, $i);
+      $url: map-get($obj, 'url');
+      $width: map-get($obj, 'width');
+      $height: map-get($obj, 'height');
+      
+      @keyframes flyAni#{$i} {
+        0% {
+          transform: translate3d(0, 0, -2000px);
+          opacity: 0;
+        }
+        1% {
+          opacity: 1;
+        }
+        100% {
+          @if $i % 4 == 0 {
+            transform: translate3d(-#{random(1000)}px, #{random(1000)}px, 1101px);
+          }
+          @else if $i % 3 == 0 {
+            transform: translate3d(-#{random(1000)}px, -#{random(1000)}px, 1101px);
+          }
+          @else if $i % 2 == 0 {
+            transform: translate3d(#{random(1000)}px, -#{random(1000)}px, 1101px);
+          }
+          @else {
+            transform: translate3d(#{random(1000)}px, #{random(1000)}px, 1101px);
+          }
+        }
+      }
+
+
+      .fly-#{$i} {
+        width: r($width);
+        height: r($height);
+        background-image: url($url);
+        background-size: contain;
+        backface-visibility: hidden;
+        transform: translate3d(0, 0, -1000px);
+
+        animation: flyAni#{$i} 10s ease-out both;
+        animation-delay: #{$i * 2 + random(3)}s;
+      }
     }
   }
 }
